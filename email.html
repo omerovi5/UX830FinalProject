@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MSU D2L — Email</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── EMAIL-SPECIFIC ── */
+.mail-layout { display: flex; flex: 1; overflow: hidden; }
+
+/* folder rail */
+.folder-rail { width: 196px; min-width: 196px; border-right: 0.5px solid var(--border); background: var(--bg2); overflow-y: auto; padding: 14px 0; }
+.folder-rail::-webkit-scrollbar { width: 4px; }
+.folder-rail::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 2px; }
+.folder-title { font-size: 8.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text3); padding: 0 16px 9px; }
+.folder-item { display: flex; align-items: center; gap: 9px; padding: 9px 16px; font-size: 12px; color: var(--text2); cursor: pointer; border-left: 2.5px solid transparent; transition: background .12s, color .12s; }
+.folder-item:hover { background: var(--bg3); color: var(--text); }
+.folder-item.active { background: var(--green-dim); border-left-color: var(--green); color: var(--text); font-weight: 600; }
+.folder-item .fi-ic { font-size: 13px; }
+.folder-item .fi-count { margin-left: auto; font-size: 10px; color: var(--text3); }
+.folder-item.active .fi-count { color: var(--green); }
+
+/* mail main column */
+.mail-main { flex: 1; overflow-y: auto; min-width: 0; }
+.mail-main::-webkit-scrollbar { width: 5px; }
+.mail-main::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 3px; }
+
+.mail-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; }
+.mail-head h1 { font-size: 18px; font-weight: 700; }
+
+.mail-toolbar { display: flex; align-items: center; gap: 8px; padding: 0 20px 12px; }
+
+.mail-filters { display: flex; align-items: center; gap: 10px; padding: 0 20px 14px; flex-wrap: wrap; }
+.mail-filters .fl { font-size: 11px; color: var(--text3); }
+
+.mail-actions { display: flex; align-items: center; gap: 18px; padding: 10px 20px; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); background: var(--bg2); }
+.mail-action { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); cursor: pointer; transition: color .12s; }
+.mail-action:hover { color: var(--blue); }
+.mail-action .ma-ic { font-size: 12px; }
+
+/* message table */
+.mrow { display: grid; grid-template-columns: 30px 24px 1fr 210px 150px 62px 32px; align-items: center; padding: 0 20px; height: 43px; border-bottom: 0.5px solid var(--border); cursor: pointer; transition: background .1s; }
+.mrow:hover { background: var(--bg3); }
+.mrow.head { height: 34px; background: var(--bg2); }
+.mrow.head > div { font-size: 9.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--text3); }
+.m-check { width: 13px; height: 13px; border: 1px solid var(--border2); border-radius: 3px; background: var(--bg3); }
+.m-unread { width: 8px; height: 8px; border-radius: 50%; background: transparent; border: 1px solid var(--text3); }
+.mrow.unread .m-unread { background: var(--green); border-color: var(--green); }
+.m-subj { font-size: 12px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 12px; }
+.mrow.unread .m-subj { color: var(--text); font-weight: 600; }
+.m-from { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; }
+.mrow.unread .m-from { color: var(--text2); }
+.m-date { font-size: 11px; color: var(--text3); }
+.m-size { font-size: 11px; color: var(--text3); }
+.m-flag { font-size: 12px; color: var(--text3); text-align: center; transition: color .12s; }
+.m-flag:hover { color: var(--amber); }
+.m-flag.on { color: var(--amber); }
+
+.mail-foot { text-align: center; padding: 22px; font-size: 11px; color: var(--text3); border-top: 0.5px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR (Email active) -->
+  <nav class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text"><strong>MSU D2L</strong><span>Desire2Learn</span></div>
+    </div>
+    <div class="nav-list">
+      <a class="nav-item" href="index.html"><span class="nav-icon">⌂</span><span class="nav-label">Home</span></a>
+      <a class="nav-item" href="index.html"><span class="nav-icon">☰</span><span class="nav-label">Courses</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">✓</span><span class="nav-label">Assignments</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">◈</span><span class="nav-label">Grades</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">◻</span><span class="nav-label">Discussions</span></a>
+      <div class="nav-divider"></div>
+      <a class="nav-item active" href="email.html" style="position:relative"><span class="nav-icon">✉</span><span class="nav-label">Email</span><span class="nav-badge">2</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">▣</span><span class="nav-label">ePortfolio</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊞</span><span class="nav-label">Self Registration</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊟</span><span class="nav-label">SPLS Tasks</span></a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" href="#"><span class="nav-icon">⌕</span><span class="nav-label">Search</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">?</span><span class="nav-label">Help</span></a>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="nav-avatar">
+        <div class="av-circle">HO</div>
+        <div class="av-detail"><div class="av-name">Haris Omerovic</div><div class="av-role">Graduate student</div></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">/</span>
+        <span class="cur">Email</span>
+      </div>
+      <div class="topbar-right">
+        <div class="icon-btn" title="Notifications">🔔<span class="icon-dot" style="background:var(--amber)"></span></div>
+        <div class="icon-btn" title="Messages">💬<span class="icon-dot" style="background:var(--red)"></span></div>
+        <div class="profile-chip">
+          <div class="chip-av">HO</div>
+          <span class="chip-name">Haris ▾</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL LAYOUT -->
+    <div class="mail-layout">
+
+      <!-- FOLDER RAIL -->
+      <div class="folder-rail">
+        <div class="folder-title">Folder List</div>
+        <div class="folder-item active"><span class="fi-ic">📥</span> Inbox <span class="fi-count">407</span></div>
+        <div class="folder-item"><span class="fi-ic">📤</span> Sent Mail</div>
+        <div class="folder-item"><span class="fi-ic">📝</span> Drafts</div>
+        <div class="folder-item"><span class="fi-ic">🗑</span> Trash</div>
+        <div class="folder-item"><span class="fi-ic">📇</span> Address Book</div>
+      </div>
+
+      <!-- MAIL MAIN -->
+      <div class="mail-main">
+
+        <div class="mail-head">
+          <h1>Inbox</h1>
+          <a class="lnk">⚙ Settings</a>
+        </div>
+
+        <div class="mail-toolbar">
+          <button class="btn btn-primary">Compose</button>
+          <button class="btn btn-ghost">Refresh</button>
+          <button class="btn btn-ghost">Folder Management</button>
+        </div>
+
+        <div class="mail-filters">
+          <span class="fl">Filter by:</span>
+          <div class="sort-btn">All Messages ▾</div>
+          <div class="search-box" style="min-width:220px;"><span>⌕</span><input type="text" placeholder="Search for…"/></div>
+          <span class="fl" style="margin-left:auto;">Folder:</span>
+          <div class="sort-btn">Inbox ▾</div>
+        </div>
+
+        <div class="mail-actions">
+          <div class="mail-action"><span class="ma-ic">🗑</span> Move to Trash</div>
+          <div class="mail-action"><span class="ma-ic">✉</span> Mark as Read</div>
+          <div class="mail-action"><span class="ma-ic">⚠</span> Report Spam</div>
+          <div class="sort-btn" style="margin-left:8px;">— Move To — ▾</div>
+        </div>
+
+        <!-- table head -->
+        <div class="mrow head">
+          <div class="m-check" style="border:none;background:none;"></div>
+          <div></div>
+          <div>Subject</div>
+          <div>From</div>
+          <div>Date</div>
+          <div>Size</div>
+          <div style="text-align:center;">⚑</div>
+        </div>
+
+        <!-- rows -->
+        <div class="mrow unread">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 22, 2026 1:49 AM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 21, 2026 11:13 PM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow unread">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Design annotations</div>
+          <div class="m-from">Hannah Wagner</div>
+          <div class="m-date">Jun 17, 2026 5:34 PM</div>
+          <div class="m-size">0.2 KB</div>
+          <div class="m-flag on">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 15, 2026 3:57 AM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 15, 2026 1:12 AM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 9, 2026 6:49 PM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 8, 2026 12:59 AM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 7, 2026 11:33 PM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow unread">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">D2L:UX830 — Announcements</div>
+          <div class="m-from">Mallory Anderson</div>
+          <div class="m-date">Jun 7, 2026 8:19 PM</div>
+          <div class="m-size">1.4 KB</div>
+          <div class="m-flag on">⚑</div>
+        </div>
+        <div class="mrow unread">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">D2L:UX830 — office hours at DT Plan feedback</div>
+          <div class="m-from">Mallory Anderson</div>
+          <div class="m-date">Jun 3, 2026 11:34 AM</div>
+          <div class="m-size">1.2 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">Jun 1, 2026 12:00 AM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+        <div class="mrow">
+          <div class="m-check"></div><div class="m-unread"></div>
+          <div class="m-subj">Submission receipt</div>
+          <div class="m-from">d2l@mail.d2l.msu.edu</div>
+          <div class="m-date">May 31, 2026 11:48 PM</div>
+          <div class="m-size">0.1 KB</div>
+          <div class="m-flag">⚑</div>
+        </div>
+
+        <div class="mail-foot">No message selected</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle">
+  <span class="toggle-label" id="mode-lbl">Dark</span>
+  <div class="toggle-track" onclick="toggleTheme()" role="switch" title="Toggle dark/light mode">
+    <div class="toggle-thumb" id="thumb">🌙</div>
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const body = document.body;
+  const thumb = document.getElementById('thumb');
+  const lbl = document.getElementById('mode-lbl');
+  body.classList.toggle('light');
+  if (body.classList.contains('light')) { thumb.textContent = '☀️'; lbl.textContent = 'Light'; }
+  else { thumb.textContent = '🌙'; lbl.textContent = 'Dark'; }
+}
+</script>
+</body>
+</html>
