@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MSU D2L — Home</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── HOME-SPECIFIC ── */
+.hero {
+  position: relative; background: var(--green-bg);
+  border-bottom: 0.5px solid var(--border);
+  padding: 26px 28px 22px; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  min-height: 168px;
+}
+.hero-bg-txt {
+  position: absolute; right: -12px; top: -18px;
+  font-size: 160px; font-weight: 800; color: rgba(29,185,84,0.04);
+  letter-spacing: -8px; pointer-events: none; user-select: none; line-height: 1;
+}
+.hero-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 9px; }
+.hero-title { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 6px; }
+.hero-meta { font-size: 10px; color: var(--text2); margin-bottom: 16px; }
+.hero-meta span { margin-right: 16px; }
+.hero-actions { display: flex; gap: 8px; }
+
+/* stats card */
+.stat-card { background: rgba(0,0,0,0.35); border: 0.5px solid #1a2e1a; border-radius: var(--radius); padding: 13px 16px; min-width: 210px; }
+body.light .stat-card { background: rgba(255,255,255,0.55); }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 11px; }
+.stat-lbl { color: var(--text2); }
+.stat-val { font-weight: 600; }
+.stat-val.g { color: var(--green); }
+.stat-val.a { color: var(--amber); }
+.stat-val.r { color: var(--red); }
+.stat-divider { height: 0.5px; background: #1e2e1e; margin: 6px 0; }
+.prog-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--green); border-radius: 2px; }
+.prog-lbl { display: flex; justify-content: space-between; font-size: 9px; color: var(--text2); margin-top: 4px; }
+
+/* content body */
+.content-body { display: flex; flex: 1; overflow: hidden; }
+.col-left { flex: 1; overflow-y: auto; border-right: 0.5px solid var(--border); }
+.col-left::-webkit-scrollbar { width: 4px; }
+.col-left::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 2px; }
+.col-right { width: 290px; min-width: 290px; overflow-y: auto; background: var(--bg2); }
+.col-right::-webkit-scrollbar { width: 4px; }
+.col-right::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 2px; }
+
+/* tabs */
+.tab-bar { display: flex; align-items: center; gap: 2px; padding: 0 18px; background: var(--bg2); border-bottom: 0.5px solid var(--border); height: 32px; }
+.tab { padding: 0 12px; height: 32px; display: flex; align-items: center; font-size: 11px; font-weight: 500; color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.12s, border-color 0.12s; white-space: nowrap; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--green); border-bottom-color: var(--green); }
+.tab-action { margin-left: auto; font-size: 10px; color: var(--blue); cursor: pointer; }
+.tab-action:hover { text-decoration: underline; }
+
+/* course cards */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 18px; }
+.course-card {
+  background: var(--bg3); border: 0.5px solid var(--border2);
+  border-radius: var(--radius); overflow: hidden; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.course-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+.card-thumb { height: 52px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: -1px; position: relative; }
+.card-body { padding: 10px 12px 12px; }
+.card-tag { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.card-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; line-height: 1.35; }
+.card-meta { font-size: 10px; color: var(--text3); margin-bottom: 9px; }
+.card-prog { height: 3px; background: var(--bg4); border-radius: 2px; overflow: hidden; }
+.card-prog-fill { height: 100%; border-radius: 2px; }
+.card-badge { position: absolute; top: 6px; right: 8px; width: 19px; height: 19px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; }
+.card-status { position: absolute; top: 6px; left: 8px; font-size: 7.5px; font-weight: 700; padding: 2px 7px; border-radius: 10px; letter-spacing: 0.5px; }
+
+/* assignments */
+.assign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 4px 18px 14px; }
+.assign-card {
+  background: var(--bg3); border-radius: var(--radius); padding: 11px 12px;
+  display: flex; gap: 10px; align-items: flex-start; cursor: pointer;
+  border-left: 3px solid; transition: background 0.12s;
+}
+.assign-card:hover { background: var(--bg4); }
+.assign-icon { width: 32px; height: 32px; min-width: 32px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.assign-course { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text3); margin-bottom: 3px; }
+.assign-name { font-size: 11px; font-weight: 500; color: var(--text); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.assign-due { font-size: 10px; font-weight: 600; }
+
+/* panel inner items */
+.announce-inner { padding: 8px 14px; }
+.upd-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--border); cursor: pointer; }
+.upd-row:last-child { border-bottom: none; }
+.upd-row:hover .upd-lbl { color: var(--blue); }
+.upd-count { font-size: 14px; font-weight: 700; color: var(--blue); min-width: 30px; }
+.upd-lbl { font-size: 11px; color: var(--text2); }
+
+/* settings toggles */
+.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.setting-card { background: var(--bg3); border-radius: var(--radius); padding: 10px; border: 0.5px solid var(--border); cursor: pointer; transition: background 0.12s; }
+.setting-card:hover { background: var(--bg4); }
+.setting-lbl { font-size: 9px; color: var(--text3); margin-bottom: 3px; }
+.setting-val { font-size: 11px; color: var(--blue); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text"><strong>MSU D2L</strong><span>Desire2Learn</span></div>
+    </div>
+    <div class="nav-list">
+      <a class="nav-item active" href="#" onclick="showView('home');return false;">
+        <span class="nav-icon">⌂</span><span class="nav-label">Home</span>
+      </a>
+      <a class="nav-item" href="#" onclick="showView('courses');return false;">
+        <span class="nav-icon">☰</span><span class="nav-label">Courses</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">✓</span><span class="nav-label">Assignments</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">◈</span><span class="nav-label">Grades</span>
+      </a>
+      <a class="nav-item" href="#">
+        <span class="nav-icon">◻</span><span class="nav-label">Discussions</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" href="#" style="position:relative">
+        <span class="nav-icon">✉</span><span class="nav-label">Email</span>
+        <span class="nav-badge">2</span>
+      </a>
+      <a class="nav-item" href="#"><span class="nav-icon">▣</span><span class="nav-label">ePortfolio</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊞</span><span class="nav-label">Self Registration</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊟</span><span class="nav-label">SPLS Tasks</span></a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" href="#"><span class="nav-icon">⌕</span><span class="nav-label">Search</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">?</span><span class="nav-label">Help</span></a>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="nav-avatar">
+        <div class="av-circle">HO</div>
+        <div class="av-detail">
+          <div class="av-name">Haris Omerovic</div>
+          <div class="av-role">Graduate student</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="breadcrumb" id="crumb">
+        <a href="#" onclick="showView('home');return false;">Home</a>
+      </div>
+      <div class="topbar-right">
+        <div class="icon-btn" title="Notifications">🔔<span class="icon-dot" style="background:var(--amber)"></span></div>
+        <div class="icon-btn" title="Messages">💬<span class="icon-dot" style="background:var(--red)"></span></div>
+        <div class="profile-chip">
+          <div class="chip-av">HO</div>
+          <span class="chip-name">Haris ▾</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-body">
+
+      <!-- ═══════════════ VIEW: HOME ═══════════════ -->
+      <div class="view active" id="view-home">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-bg-txt">UX</div>
+        <div>
+          <div class="hero-eyebrow">Currently active · Summer 2026</div>
+          <div class="hero-title">UX 830 — Design for Interactivity</div>
+          <div class="hero-meta">
+            <span>Ends July 4, 2026</span>
+            <span>3 assignments due this week</span>
+            <span>Last activity 2h ago</span>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="window.location='course.html'">Continue course</button>
+            <button class="btn btn-ghost">View syllabus</button>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-row"><span class="stat-lbl">Grade so far</span><span class="stat-val g">92.4% — A</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-row"><span class="stat-lbl">Assignments pending</span><span class="stat-val a">3</span></div>
+          <div class="stat-row"><span class="stat-lbl">Discussion posts</span><span class="stat-val g">4 / 5</span></div>
+          <div class="stat-row"><span class="stat-lbl">Next deadline</span><span class="stat-val r">July 4</span></div>
+          <div class="stat-row"><span class="stat-lbl">Instructor</span><span class="stat-val">Mallory Anderson</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:64%"></div></div>
+          <div class="prog-lbl"><span>Course progress</span><span style="color:var(--green)">64%</span></div>
+        </div>
+      </div>
+
+      <!-- CONTENT BODY -->
+      <div class="content-body">
+
+        <!-- LEFT COLUMN -->
+        <div class="col-left">
+
+          <!-- My Courses tabs -->
+          <div class="tab-bar">
+            <span class="tab active">Active (3)</span>
+            <span class="tab" onclick="showView('courses')">Completed (12)</span>
+            <span class="tab" onclick="showView('courses')">Upcoming (5)</span>
+            <span class="tab" onclick="showView('courses')">All (20)</span>
+            <span class="tab-action" onclick="showView('courses')">View all 20+ →</span>
+          </div>
+
+          <div class="cards-grid">
+            <!-- UX 830 -->
+            <div class="course-card" onclick="window.location='course.html'">
+              <div class="card-thumb" style="background:#0a1f0e">
+                <span style="color:#163a22;font-size:22px">UX 830</span>
+                <span class="card-badge" style="background:var(--blue)">3</span>
+                <span class="card-status" style="background:#0d3018;color:var(--green)">● ACTIVE</span>
+              </div>
+              <div class="card-body">
+                <div class="card-tag" style="color:var(--green)">UX Design · Summer 2026</div>
+                <div class="card-name">Design for Interactivity</div>
+                <div class="card-meta">US26-UX-830 · Ends July 4, 2026</div>
+                <div class="card-prog"><div class="card-prog-fill" style="width:64%;background:var(--green)"></div></div>
+              </div>
+            </div>
+            <!-- UX 835 -->
+            <div class="course-card">
+              <div class="card-thumb" style="background:#1a1200">
+                <span style="color:#3d2c00;font-size:22px">UX 835</span>
+                <span class="card-badge" style="background:var(--red)">99+</span>
+                <span class="card-status" style="background:#2a1e00;color:var(--amber)">● ACTIVE</span>
+              </div>
+              <div class="card-body">
+                <div class="card-tag" style="color:var(--amber)">Accessibility · Summer 2026</div>
+                <div class="card-name">Accessibility and Design</div>
+                <div class="card-meta">UX-835 · Ends Aug 22, 2026</div>
+                <div class="card-prog"><div class="card-prog-fill" style="width:28%;background:var(--amber)"></div></div>
+              </div>
+            </div>
+            <!-- UX 825 -->
+            <div class="course-card">
+              <div class="card-thumb" style="background:#0f0f20">
+                <span style="color:#222244;font-size:22px">UX 825</span>
+                <span class="card-badge" style="background:#555">28</span>
+                <span class="card-status" style="background:#1a1a38;color:#5a5acc">● ACTIVE</span>
+              </div>
+              <div class="card-body">
+                <div class="card-tag" style="color:#5a5acc">Visual Design · Summer 2026</div>
+                <div class="card-name">Visual Design Fundamentals</div>
+                <div class="card-meta">UX-825 · Ends July 4, 2026</div>
+                <div class="card-prog"><div class="card-prog-fill" style="width:45%;background:#5a5acc"></div></div>
+              </div>
+            </div>
+            <!-- MTH 421 completed -->
+            <div class="course-card" style="opacity:0.6">
+              <div class="card-thumb" style="background:#141414">
+                <span style="color:#2a2a2a;font-size:22px">MTH 421</span>
+                <span class="card-status" style="background:#111;color:#444">COMPLETED SP26</span>
+              </div>
+              <div class="card-body">
+                <div class="card-tag" style="color:#444">Math · Spring 2026</div>
+                <div class="card-name">Applied Linear Algebra</div>
+                <div class="card-meta">Grade: A−</div>
+                <div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-label">Upcoming assignments</div>
+
+          <div class="assign-grid">
+            <div class="assign-card" style="border-color:var(--red)">
+              <div class="assign-icon" style="background:rgba(229,83,75,0.12)">📋</div>
+              <div style="min-width:0">
+                <div class="assign-course">UX 830</div>
+                <div class="assign-name">Interaction Prototype — User Flow Deck</div>
+                <div class="assign-due" style="color:var(--red)">⚠ Due July 4</div>
+              </div>
+            </div>
+            <div class="assign-card" style="border-color:var(--red)">
+              <div class="assign-icon" style="background:rgba(229,83,75,0.12)">🎨</div>
+              <div style="min-width:0">
+                <div class="assign-course">UX 825</div>
+                <div class="assign-name">Typography Systems — Specimen Layout</div>
+                <div class="assign-due" style="color:var(--red)">⚠ Due July 4</div>
+              </div>
+            </div>
+            <div class="assign-card" style="border-color:var(--amber)">
+              <div class="assign-icon" style="background:rgba(245,166,35,0.12)">♿</div>
+              <div style="min-width:0">
+                <div class="assign-course">UX 835</div>
+                <div class="assign-name">Annotated Heuristic Evaluation Report</div>
+                <div class="assign-due" style="color:var(--amber)">⏱ Due July 12</div>
+              </div>
+            </div>
+            <div class="assign-card" style="border-color:var(--green)">
+              <div class="assign-icon" style="background:rgba(29,185,84,0.1)">💬</div>
+              <div style="min-width:0">
+                <div class="assign-course">UX 830</div>
+                <div class="assign-name">Discussion Post — Week 5 Reflection</div>
+                <div class="assign-due" style="color:var(--green)">✓ Due Aug 10</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col-right">
+
+          <!-- Announcements -->
+          <div class="panel open" id="p-ann">
+            <div class="panel-hd" onclick="tog('p-ann')">
+              <div class="panel-hd-l"><span class="panel-icon">📢</span> Announcements <span class="panel-count">3 new</span></div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body">
+              <div class="panel-inner">
+                <div class="list-item">
+                  <div class="dot" style="background:var(--blue)"></div>
+                  <div><div class="list-text"><strong>UX 830 —</strong> Journey Map deadline reminder. Final submission due July 4 at 11:59 PM.</div><div class="list-sub">Yesterday · Mallory Anderson</div></div>
+                </div>
+                <div class="list-item">
+                  <div class="dot" style="background:var(--green)"></div>
+                  <div><div class="list-text"><strong>UX 835 —</strong> Feedback posted on your WCAG Scavenger Hunt. Check gradebook for comments.</div><div class="list-sub">June 23 · Instructor</div></div>
+                </div>
+                <div class="list-item">
+                  <div class="dot" style="background:var(--text3)"></div>
+                  <div><div class="list-text"><strong>System —</strong> Welcome to MSU D2L Summer 2026 semester.</div><div class="list-sub">June 1 · D2L System</div></div>
+                </div>
+                <a class="lnk" style="display:inline-block;margin-top:8px">Show all announcements →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Need Help -->
+          <div class="panel" id="p-help">
+            <div class="panel-hd" onclick="tog('p-help')">
+              <div class="panel-hd-l"><span class="panel-icon">🛟</span> Need help?</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body">
+              <div class="panel-inner">
+                <div class="help-row"><span>Local</span><span style="font-weight:600">(517) 432-6200</span></div>
+                <div class="help-row"><span>Toll free</span><span style="font-weight:600">(844) 678-6200</span></div>
+                <div style="height:0.5px;background:var(--border);margin:7px 0"></div>
+                <div class="help-row"><a class="lnk">D2L Contact Form</a><a class="lnk">D2L Help Site</a></div>
+                <div class="help-row"><a class="lnk">IT Service Status</a><a class="lnk">Subscribe</a></div>
+                <div style="margin-top:8px"><a class="lnk">Educational Technology Training →</a></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Settings -->
+          <div class="panel" id="p-set">
+            <div class="panel-hd" onclick="tog('p-set')">
+              <div class="panel-hd-l"><span class="panel-icon">⚙️</span> My settings</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body">
+              <div class="panel-inner">
+                <div class="toggle-row"><span>Email notifications</span><div class="mini-toggle on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="toggle-row"><span>Assignment reminders</span><div class="mini-toggle on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="toggle-row"><span>Discussion replies</span><div class="mini-toggle" onclick="this.classList.toggle('on')"></div></div>
+                <div class="toggle-row"><span>Announcement alerts</span><div class="mini-toggle on" onclick="this.classList.toggle('on')"></div></div>
+                <a class="lnk" style="display:inline-block;margin-top:10px">Edit full profile →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Resources -->
+          <div class="panel" id="p-res">
+            <div class="panel-hd" onclick="tog('p-res')">
+              <div class="panel-hd-l"><span class="panel-icon">🎓</span> Student resources <span class="panel-count">6</span></div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body">
+              <div class="panel-inner">
+                <div class="res-item">ASMSU — Undergraduate Student Government</div>
+                <div class="res-item">COGS — Graduate Student Government</div>
+                <div class="res-item">Counseling &amp; Psychiatric Services (CAPS)</div>
+                <div class="res-item">Career Services Network</div>
+                <div class="res-item">MSU Libraries &amp; Research Support</div>
+                <div class="res-item">Disability Resource Center</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      </div><!-- /view-home -->
+
+      <!-- ═══════════════ VIEW: MY COURSES ═══════════════ -->
+      <div class="view" id="view-courses">
+
+        <div class="mc-head">
+          <div>
+            <div class="mc-title">My Courses</div>
+            <div class="mc-sub">Summer 2026 · 20 total courses across all semesters</div>
+          </div>
+          <div class="mc-tools">
+            <div class="search-box"><span>⌕</span><input type="text" placeholder="Search courses…"/></div>
+            <div class="sort-btn">Sort: Semester ▾</div>
+          </div>
+        </div>
+
+        <!-- tabs -->
+        <div class="tab-bar" style="margin-top:4px;">
+          <span class="tab active">Active (3)</span>
+          <span class="tab">Completed (12)</span>
+          <span class="tab">Upcoming (5)</span>
+          <span class="tab">All (20)</span>
+        </div>
+
+        <!-- ACTIVE -->
+        <div class="status-divider g">Active — Summer 2026</div>
+        <div class="cards-grid-3">
+          <div class="course-card" onclick="window.location='course.html'">
+            <div class="card-thumb" style="background:#0a1f0e"><span style="color:#163a22">UX 830</span><span class="card-badge" style="background:var(--blue)">3</span><span class="card-status" style="background:#0d3018;color:var(--green)">● ACTIVE</span></div>
+            <div class="card-body"><div class="card-tag" style="color:var(--green)">UX Design · Summer 2026</div><div class="card-name">Design for Interactivity</div><div class="card-meta">US26-UX-830 · Mallory Anderson</div><div class="card-prog"><div class="card-prog-fill" style="width:64%;background:var(--green)"></div></div></div>
+          </div>
+          <div class="course-card">
+            <div class="card-thumb" style="background:#1a1200"><span style="color:#3d2c00">UX 835</span><span class="card-badge" style="background:var(--red)">99+</span><span class="card-status" style="background:#2a1e00;color:var(--amber)">● ACTIVE</span></div>
+            <div class="card-body"><div class="card-tag" style="color:var(--amber)">Accessibility · Summer 2026</div><div class="card-name">Accessibility and Design</div><div class="card-meta">UX-835 · Ends Aug 22, 2026</div><div class="card-prog"><div class="card-prog-fill" style="width:28%;background:var(--amber)"></div></div></div>
+          </div>
+          <div class="course-card">
+            <div class="card-thumb" style="background:#0f0f20"><span style="color:#222244">UX 825</span><span class="card-badge" style="background:#555">28</span><span class="card-status" style="background:#1a1a38;color:#5a5acc">● ACTIVE</span></div>
+            <div class="card-body"><div class="card-tag" style="color:#5a5acc">Visual Design · Summer 2026</div><div class="card-name">Visual Design Fundamentals</div><div class="card-meta">UX-825 · Ends July 4, 2026</div><div class="card-prog"><div class="card-prog-fill" style="width:45%;background:#5a5acc"></div></div></div>
+          </div>
+        </div>
+
+        <!-- COMPLETED -->
+        <div class="status-divider b">Completed — Spring 2024 · Fall 2023 · Spring 2023 <a class="lnk" style="text-transform:none;letter-spacing:0;font-weight:400">Show all 12 →</a></div>
+        <div class="cards-grid-6">
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 332</span><span class="card-status" style="background:#111;color:#444">CLOSED SS24</span></div><div class="card-body"><div class="card-name">Game Interface Design</div><div class="card-meta">Spring 2024 · A</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 455</span><span class="card-status" style="background:#111;color:#444">CLOSED SS24</span></div><div class="card-body"><div class="card-name">Game Design &amp; Dev II</div><div class="card-meta">Spring 2024 · A−</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 330</span><span class="card-status" style="background:#111;color:#444">CLOSED FS23</span></div><div class="card-body"><div class="card-name">Game Level Design</div><div class="card-meta">Fall 2023 · B+</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 445</span><span class="card-status" style="background:#111;color:#444">CLOSED FS23</span></div><div class="card-body"><div class="card-name">Game Design &amp; Dev I</div><div class="card-meta">Fall 2023 · A</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 227</span><span class="card-status" style="background:#111;color:#444">CLOSED FS23</span></div><div class="card-body"><div class="card-name">Concept Design: Games</div><div class="card-meta">Fall 2023 · A−</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#141414"><span style="color:#2a2a2a">MI 235</span><span class="card-status" style="background:#111;color:#444">CLOSED FS23</span></div><div class="card-body"><div class="card-name">Video Game Audio</div><div class="card-meta">Fall 2023 · A</div><div class="card-prog"><div class="card-prog-fill" style="width:100%;background:#2e6e2e"></div></div></div></div>
+        </div>
+        <div class="more-strip"><span>+ 6 more completed courses — MI 339, MTH 102, ISS 325, CAS 116, MI 231, MI 230 · Spring 2023</span><a class="lnk">Show all →</a></div>
+
+        <!-- UPCOMING + assignments -->
+        <div class="status-divider a">Upcoming — Fall 2026</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:6px 18px 8px;">
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#0d1620"><span style="color:#1a2e44">CSE 480</span><span class="card-status" style="background:#0d2438;color:var(--blue)">UPCOMING FA26</span></div><div class="card-body"><div class="card-name">Database Systems</div><div class="card-meta">Fall 2026 · Starts Aug 25</div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#0d1620"><span style="color:#1a2e44">ANT 230</span><span class="card-status" style="background:#0d2438;color:var(--blue)">UPCOMING FA26</span></div><div class="card-body"><div class="card-name">Cultural Anthropology</div><div class="card-meta">Fall 2026 · Starts Aug 25</div></div></div>
+          <div class="course-card mini" style="opacity:0.62"><div class="card-thumb" style="background:#0d1620"><span style="color:#1a2e44">MI 491</span><span class="card-status" style="background:#0d2438;color:var(--blue)">UPCOMING FA26</span></div><div class="card-body"><div class="card-name">Senior Capstone Project</div><div class="card-meta">Fall 2026 · Starts Aug 25</div></div></div>
+        </div>
+
+        <div class="sec-label">Upcoming assignments</div>
+        <div style="padding:0 18px;">
+          <div class="assign-list">
+            <div class="assign-line" style="border-color:var(--red)"><div><div class="al-code">UX 830</div><div class="al-name">Interaction Prototype — User Flow Deck</div></div><div class="al-date" style="color:var(--red)">⚠ July 4</div></div>
+            <div class="assign-line" style="border-color:var(--amber)"><div><div class="al-code">UX 835</div><div class="al-name">Annotated Heuristic Evaluation Report</div></div><div class="al-date" style="color:var(--amber)">⏱ July 12</div></div>
+            <div class="assign-line" style="border-color:var(--green)"><div><div class="al-code">UX 825</div><div class="al-name">Typography Systems — Specimen Layout</div></div><div class="al-date" style="color:var(--green)">✓ Aug 10</div></div>
+          </div>
+        </div>
+
+        <!-- filter bar -->
+        <div class="filter-bar">
+          <span class="filter-lbl">Filter by semester:</span>
+          <span class="chip on-g">Summer 2026</span>
+          <span class="chip">Spring 2024</span>
+          <span class="chip">Fall 2023</span>
+          <span class="chip">Spring 2023</span>
+          <span class="chip on-b">Fall 2026</span>
+          <div class="legend">
+            <span class="li"><span class="dot" style="background:var(--green)"></span>Active</span>
+            <span class="li"><span class="dot" style="background:var(--text3)"></span>Completed</span>
+            <span class="li"><span class="dot" style="background:var(--blue)"></span>Upcoming</span>
+          </div>
+        </div>
+        <div class="foot-note">Showing 9 of 20 courses — use tabs or semester filter to browse all</div>
+
+      </div><!-- /view-courses -->
+
+    </div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle">
+  <span class="toggle-label" id="mode-lbl">Dark</span>
+  <div class="toggle-track" onclick="toggleTheme()" role="switch" title="Toggle dark/light mode">
+    <div class="toggle-thumb" id="thumb">🌙</div>
+  </div>
+</div>
+
+<script>
+function tog(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleTheme() {
+  const body = document.body;
+  const thumb = document.getElementById('thumb');
+  const lbl = document.getElementById('mode-lbl');
+  body.classList.toggle('light');
+  if (body.classList.contains('light')) {
+    thumb.textContent = '☀️';
+    lbl.textContent = 'Light';
+  } else {
+    thumb.textContent = '🌙';
+    lbl.textContent = 'Dark';
+  }
+}
+/* switch between the Home view and the My Courses view, both in this file */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  document.getElementById('view-' + name).classList.add('active');
+  /* sidebar active state: Home item vs Courses item */
+  var items = document.querySelectorAll('.nav-list .nav-item');
+  items[0].classList.toggle('active', name === 'home');
+  items[1].classList.toggle('active', name === 'courses');
+  /* breadcrumb */
+  var crumb = document.getElementById('crumb');
+  if (name === 'courses') {
+    crumb.innerHTML = '<a href="#" onclick="showView(\'home\');return false;">Home</a><span class="sep">/</span><span class="cur">My Courses</span>';
+  } else {
+    crumb.innerHTML = '<a href="#" onclick="showView(\'home\');return false;">Home</a>';
+  }
+  document.querySelector('.scroll-body').scrollTop = 0;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>UX 830 — Design for Interactivity</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── COURSE-PAGE HERO (reuses tokens) ── */
+.hero {
+  position: relative; background: var(--green-bg);
+  border-bottom: 0.5px solid var(--border);
+  padding: 22px 28px 20px; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  min-height: 150px;
+}
+.hero-bg-txt { position: absolute; right: -6px; top: -22px; font-size: 150px; font-weight: 800; color: rgba(29,185,84,0.04); letter-spacing: -8px; pointer-events: none; user-select: none; line-height: 1; }
+.hero-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 9px; }
+.hero-title { font-size: 21px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 6px; }
+.hero-meta { font-size: 10px; color: var(--text2); margin-bottom: 15px; }
+.hero-actions { display: flex; gap: 8px; }
+
+.stat-card { background: rgba(0,0,0,0.35); border: 0.5px solid #1a2e1a; border-radius: var(--radius); padding: 13px 16px; min-width: 218px; }
+body.light .stat-card { background: rgba(255,255,255,0.55); }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 11px; }
+.stat-lbl { color: var(--text2); }
+.stat-val { font-weight: 600; }
+.stat-val.g { color: var(--green); }
+.stat-val.r { color: var(--red); }
+.stat-divider { height: 0.5px; background: #1e2e1e; margin: 6px 0; }
+.prog-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--green); border-radius: 2px; }
+.prog-lbl { display: flex; justify-content: space-between; font-size: 9px; color: var(--text2); margin-top: 4px; }
+
+/* two-column body */
+.content-body { display: flex; flex: 1; overflow: hidden; }
+.col-left { flex: 1; overflow-y: auto; border-right: 0.5px solid var(--border); padding-top: 4px; }
+.col-left::-webkit-scrollbar { width: 4px; }
+.col-left::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 2px; }
+.col-right { width: 290px; min-width: 290px; overflow-y: auto; background: var(--bg2); }
+.col-right::-webkit-scrollbar { width: 4px; }
+.col-right::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR (Courses active) -->
+  <nav class="sidebar">
+    <div class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text"><strong>MSU D2L</strong><span>Desire2Learn</span></div>
+    </div>
+    <div class="nav-list">
+      <a class="nav-item" href="index.html"><span class="nav-icon">⌂</span><span class="nav-label">Home</span></a>
+      <a class="nav-item active" href="index.html"><span class="nav-icon">☰</span><span class="nav-label">Courses</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">✓</span><span class="nav-label">Assignments</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">◈</span><span class="nav-label">Grades</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">◻</span><span class="nav-label">Discussions</span></a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" href="#" style="position:relative"><span class="nav-icon">✉</span><span class="nav-label">Email</span><span class="nav-badge">2</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">▣</span><span class="nav-label">ePortfolio</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊞</span><span class="nav-label">Self Registration</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">⊟</span><span class="nav-label">SPLS Tasks</span></a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" href="#"><span class="nav-icon">⌕</span><span class="nav-label">Search</span></a>
+      <a class="nav-item" href="#"><span class="nav-icon">?</span><span class="nav-label">Help</span></a>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="nav-avatar">
+        <div class="av-circle">HO</div>
+        <div class="av-detail"><div class="av-name">Haris Omerovic</div><div class="av-role">Graduate student</div></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="index.html">My Courses</a>
+        <span class="sep">/</span>
+        <span class="cur">UX 830 — Design for Interactivity</span>
+      </div>
+      <div class="topbar-right">
+        <div class="icon-btn" title="Notifications">🔔<span class="icon-dot" style="background:var(--amber)"></span></div>
+        <div class="icon-btn" title="Messages">💬<span class="icon-dot" style="background:var(--red)"></span></div>
+        <div class="profile-chip">
+          <div class="chip-av">HO</div>
+          <span class="chip-name">Haris ▾</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COURSE SUB-NAV -->
+    <div class="subnav">
+      <span class="subnav-item active">Course Home</span>
+      <span class="subnav-item">Content</span>
+      <span class="subnav-item">Assessments <span class="car">▾</span></span>
+      <span class="subnav-item">Course Tools <span class="car">▾</span></span>
+      <span class="subnav-item">Communication <span class="car">▾</span></span>
+      <span class="subnav-item">Help</span>
+    </div>
+
+    <div class="scroll-body">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-bg-txt">U</div>
+        <div>
+          <div class="hero-eyebrow">Active · Summer 2026 · US26-UX-830-730</div>
+          <div class="hero-title">UX 830 — Design for Interactivity</div>
+          <div class="hero-meta">Instructor: Mallory Anderson · Ends July 4, 2026 at 11:59 PM</div>
+          <div class="hero-actions">
+            <button class="btn btn-primary">Continue where I left off</button>
+            <button class="btn btn-ghost">View syllabus</button>
+            <button class="btn btn-ghost">Classlist</button>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-row"><span class="stat-lbl">Grade so far</span><span class="stat-val g">92.4% — A</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-row"><span class="stat-lbl">Assignments pending</span><span class="stat-val">3</span></div>
+          <div class="stat-row"><span class="stat-lbl">Discussion posts</span><span class="stat-val g">4 / 5</span></div>
+          <div class="stat-row"><span class="stat-lbl">Next deadline</span><span class="stat-val r">July 4, 2026</span></div>
+          <div class="stat-row"><span class="stat-lbl">Last activity</span><span class="stat-val">2 hours ago</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:64%"></div></div>
+          <div class="prog-lbl"><span>Course progress</span><span style="color:var(--green)">64%</span></div>
+        </div>
+      </div>
+
+      <!-- TWO-COLUMN BODY -->
+      <div class="content-body">
+
+        <!-- LEFT: resume + modules -->
+        <div class="col-left">
+
+          <div class="resume-banner">
+            <div class="resume-ic">📄</div>
+            <div class="resume-txt">
+              <div class="resume-name">Design Thinking Project — course final project</div>
+              <div class="resume-sub">Course Wrap-Up · Due Jun 25, 2026 at 11:59 PM</div>
+            </div>
+            <button class="btn btn-primary">Continue</button>
+          </div>
+
+          <div class="sec-label">Course modules</div>
+
+          <div class="module">
+            <div class="module-hd" onclick="togM(this)">
+              <span class="module-twist">▶</span><span class="module-ic">🚀</span>
+              <span class="module-name">Get Started</span>
+              <span class="module-due">Due May 17, 2026</span>
+              <span class="module-stat done">Completed 5 / 5</span>
+            </div>
+            <div class="module-body">
+              <div class="topic link"><span class="topic-ic">🌐</span><span class="topic-name">Welcome &amp; Orientation</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">📄</span><span class="topic-name">Syllabus walkthrough</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">💬</span><span class="topic-name">Introduce yourself (discussion)</span><span class="topic-check">✓</span></div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-hd" onclick="togM(this)">
+              <span class="module-twist">▶</span><span class="module-ic">📦</span>
+              <span class="module-name">Unit 1 — Foundations of UX</span>
+              <span class="module-due">Due May 17, 2026</span>
+              <span class="module-stat done">Completed 6 / 6</span>
+            </div>
+            <div class="module-body">
+              <div class="topic link"><span class="topic-ic">📄</span><span class="topic-name">What is interaction design?</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">🎥</span><span class="topic-name">Lecture: Mental models</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Quiz 1</span><span class="topic-check">✓</span></div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-hd" onclick="togM(this)">
+              <span class="module-twist">▶</span><span class="module-ic">📦</span>
+              <span class="module-name">Unit 2 — Research Methods</span>
+              <span class="module-due">Due May 31, 2026</span>
+              <span class="module-stat done">Completed 14 / 14</span>
+            </div>
+            <div class="module-body">
+              <div class="topic link"><span class="topic-ic">📄</span><span class="topic-name">Interview techniques</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">📊</span><span class="topic-name">Affinity mapping exercise</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Research synthesis assignment</span><span class="topic-check">✓</span></div>
+            </div>
+          </div>
+
+          <div class="module">
+            <div class="module-hd" onclick="togM(this)">
+              <span class="module-twist">▶</span><span class="module-ic">📦</span>
+              <span class="module-name">Unit 3 — Prototyping and Testing</span>
+              <span class="module-due">Due Jun 14, 2026</span>
+              <span class="module-stat done">Completed 5 / 5</span>
+            </div>
+            <div class="module-body">
+              <div class="topic link"><span class="topic-ic">📄</span><span class="topic-name">Lo-fi vs hi-fi prototypes</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">🎥</span><span class="topic-name">Usability testing basics</span><span class="topic-check">✓</span></div>
+              <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Prototype critique</span><span class="topic-check">✓</span></div>
+            </div>
+          </div>
+
+          <div class="module open">
+            <div class="module-hd" onclick="togM(this)">
+              <span class="module-twist">▶</span><span class="module-ic">🎯</span>
+              <span class="module-name">Course Wrap-Up</span>
+              <span class="module-due">Due Jun 25, 2026</span>
+              <span class="module-stat part">Completed 1 / 2</span>
+            </div>
+            <div class="module-body">
+              <div class="topic link"><span class="topic-ic">🌐</span><span class="topic-name">Overview for Course Wrap-Up</span><span class="topic-date">Jun 25</span><span class="topic-check">✓</span></div>
+              <div class="topic cur"><span class="topic-ic">📄</span><span class="topic-name">Design Thinking Project — course final project</span><span class="topic-date due">Due Jun 25</span></div>
+            </div>
+          </div>
+
+          <div class="scroll-note-c">
+            Sidebar, top bar, breadcrumb, and dark/light toggle are consistent across home, course list, and this course page. Right-column panels are independently collapsible — click a header to expand or collapse.
+          </div>
+
+        </div>
+
+        <!-- RIGHT: rail -->
+        <div class="col-right">
+
+          <!-- grade summary panel (open) -->
+          <div class="panel open" id="r-grade">
+            <div class="panel-hd" onclick="tog('r-grade')">
+              <div class="panel-hd-l"><span class="panel-icon">📊</span> Grade summary</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner">
+              <div class="rg-row"><span class="k">Grade so far</span><span class="v" style="color:var(--green)">92.4% — A</span></div>
+              <div class="rg-row"><span class="k">Assignments pending</span><span class="v">3</span></div>
+              <div class="rg-row"><span class="k">Discussion posts</span><span class="v" style="color:var(--green)">4 / 5</span></div>
+              <div class="rg-row"><span class="k">Next deadline</span><span class="v" style="color:var(--red)">July 4, 2026</span></div>
+              <div class="prog-bar" style="margin-top:8px"><div class="prog-fill" style="width:64%"></div></div>
+              <div class="prog-lbl"><span>Course progress</span><span style="color:var(--green)">64%</span></div>
+            </div></div>
+          </div>
+
+          <!-- announcements (open) -->
+          <div class="panel open" id="r-ann">
+            <div class="panel-hd" onclick="tog('r-ann')">
+              <div class="panel-hd-l"><span class="panel-icon">📢</span> Announcements</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner">
+              <div class="list-item"><div class="dot" style="background:var(--text3)"></div><div class="list-text">No announcements to display.</div></div>
+            </div></div>
+          </div>
+
+          <!-- updates (open) -->
+          <div class="panel open" id="r-upd">
+            <div class="panel-hd" onclick="tog('r-upd')">
+              <div class="panel-hd-l"><span class="panel-icon">📰</span> Updates</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner">
+              <div class="cal-event"><span style="font-size:14px;font-weight:700;color:var(--blue);min-width:30px">99</span><span class="cal-text">Unread discussion posts</span></div>
+              <div class="cal-event"><span style="font-size:14px;font-weight:700;color:var(--blue);min-width:30px">407</span><span class="cal-text">New emails</span></div>
+            </div></div>
+          </div>
+
+          <!-- calendar (open) -->
+          <div class="panel open" id="r-cal">
+            <div class="panel-hd" onclick="tog('r-cal')">
+              <div class="panel-hd-l"><span class="panel-icon">📅</span> Calendar</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner">
+              <div class="cal-date-block"><div class="d">25</div><div class="w">Thursday, June 2026</div></div>
+              <div class="cal-event"><span class="cal-dot" style="background:var(--red)"></span><span class="cal-text">Design Thinking Project due</span><span class="cal-due" style="color:var(--red)">Jun 25</span></div>
+              <div class="cal-event"><span class="cal-dot" style="background:var(--amber)"></span><span class="cal-text">Discussion — final reflections</span><span class="cal-due" style="color:var(--amber)">Jul 1</span></div>
+              <div class="cal-event"><span class="cal-dot" style="background:var(--red)"></span><span class="cal-text">Course Wrap-Up closes</span><span class="cal-due" style="color:var(--red)">Jul 4</span></div>
+            </div></div>
+          </div>
+
+          <!-- content browser (closed) -->
+          <div class="panel" id="r-cb">
+            <div class="panel-hd" onclick="tog('r-cb')">
+              <div class="panel-hd-l"><span class="panel-icon">📁</span> Content browser</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner"><a class="lnk">All course content →</a></div></div>
+          </div>
+
+          <!-- need help (closed) -->
+          <div class="panel" id="r-help">
+            <div class="panel-hd" onclick="tog('r-help')">
+              <div class="panel-hd-l"><span class="panel-icon">🛟</span> Need help?</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner"><a class="lnk">D2L Contact Form</a></div></div>
+          </div>
+
+          <!-- library (closed) -->
+          <div class="panel" id="r-lib">
+            <div class="panel-hd" onclick="tog('r-lib')">
+              <div class="panel-hd-l"><span class="panel-icon">📚</span> Library resources</div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="panel-body"><div class="panel-inner"><a class="lnk">MSU Libraries →</a></div></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle">
+  <span class="toggle-label" id="mode-lbl">Dark</span>
+  <div class="toggle-track" onclick="toggleTheme()" role="switch" title="Toggle dark/light mode">
+    <div class="toggle-thumb" id="thumb">🌙</div>
+  </div>
+</div>
+
+<script>
+function tog(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function togM(hd) {
+  hd.parentElement.classList.toggle('open');
+}
+function toggleTheme() {
+  const body = document.body;
+  const thumb = document.getElementById('thumb');
+  const lbl = document.getElementById('mode-lbl');
+  body.classList.toggle('light');
+  if (body.classList.contains('light')) {
+    thumb.textContent = '☀️';
+    lbl.textContent = 'Light';
+  } else {
+    thumb.textContent = '🌙';
+    lbl.textContent = 'Dark';
+  }
+}
+</script>
+</body>
+</html>
