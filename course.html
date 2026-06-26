@@ -19,7 +19,7 @@
 .hero-title { font-size: 21px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 6px; }
 .hero-meta { font-size: 10px; color: var(--text2); margin-bottom: 15px; }
 .hero-actions { display: flex; gap: 8px; }
-
+ 
 .stat-card { background: rgba(0,0,0,0.35); border: 0.5px solid #1a2e1a; border-radius: var(--radius); padding: 13px 16px; min-width: 218px; }
 body.light .stat-card { background: rgba(255,255,255,0.55); }
 .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 11px; }
@@ -31,7 +31,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
 .prog-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 10px; overflow: hidden; }
 .prog-fill { height: 100%; background: var(--green); border-radius: 2px; }
 .prog-lbl { display: flex; justify-content: space-between; font-size: 9px; color: var(--text2); margin-top: 4px; }
-
+ 
 /* two-column body */
 .content-body { display: flex; flex: 1; overflow: hidden; }
 .col-left { flex: 1; overflow-y: auto; border-right: 0.5px solid var(--border); padding-top: 4px; }
@@ -44,7 +44,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
 </head>
 <body>
 <div class="app">
-
+ 
   <!-- SIDEBAR (Courses active) -->
   <nav class="sidebar">
     <div class="logo">
@@ -58,7 +58,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
       <a class="nav-item" href="#"><span class="nav-icon">◈</span><span class="nav-label">Grades</span></a>
       <a class="nav-item" href="#"><span class="nav-icon">◻</span><span class="nav-label">Discussions</span></a>
       <div class="nav-divider"></div>
-      <a class="nav-item" href="#" style="position:relative"><span class="nav-icon">✉</span><span class="nav-label">Email</span><span class="nav-badge">2</span></a>
+      <a class="nav-item" href="email.html" style="position:relative"><span class="nav-icon">✉</span><span class="nav-label">Email</span><span class="nav-badge">2</span></a>
       <a class="nav-item" href="#"><span class="nav-icon">▣</span><span class="nav-label">ePortfolio</span></a>
       <a class="nav-item" href="#"><span class="nav-icon">⊞</span><span class="nav-label">Self Registration</span></a>
       <a class="nav-item" href="#"><span class="nav-icon">⊟</span><span class="nav-label">SPLS Tasks</span></a>
@@ -73,10 +73,10 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
       </div>
     </div>
   </nav>
-
+ 
   <!-- MAIN -->
   <div class="main">
-
+ 
     <!-- TOP BAR -->
     <div class="topbar">
       <div class="breadcrumb">
@@ -95,7 +95,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
         </div>
       </div>
     </div>
-
+ 
     <!-- COURSE SUB-NAV -->
     <div class="subnav">
       <span class="subnav-item active">Course Home</span>
@@ -105,9 +105,9 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
       <span class="subnav-item">Communication <span class="car">▾</span></span>
       <span class="subnav-item">Help</span>
     </div>
-
+ 
     <div class="scroll-body">
-
+ 
       <!-- HERO -->
       <div class="hero">
         <div class="hero-bg-txt">U</div>
@@ -132,13 +132,13 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
           <div class="prog-lbl"><span>Course progress</span><span style="color:var(--green)">64%</span></div>
         </div>
       </div>
-
+ 
       <!-- TWO-COLUMN BODY -->
       <div class="content-body">
-
+ 
         <!-- LEFT: resume + modules -->
         <div class="col-left">
-
+ 
           <div class="resume-banner">
             <div class="resume-ic">📄</div>
             <div class="resume-txt">
@@ -147,9 +147,9 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
             </div>
             <button class="btn btn-primary">Continue</button>
           </div>
-
+ 
           <div class="sec-label">Course modules</div>
-
+ 
           <div class="module">
             <div class="module-hd" onclick="togM(this)">
               <span class="module-twist">▶</span><span class="module-ic">🚀</span>
@@ -163,7 +163,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="topic link"><span class="topic-ic">💬</span><span class="topic-name">Introduce yourself (discussion)</span><span class="topic-check">✓</span></div>
             </div>
           </div>
-
+ 
           <div class="module">
             <div class="module-hd" onclick="togM(this)">
               <span class="module-twist">▶</span><span class="module-ic">📦</span>
@@ -177,7 +177,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Quiz 1</span><span class="topic-check">✓</span></div>
             </div>
           </div>
-
+ 
           <div class="module">
             <div class="module-hd" onclick="togM(this)">
               <span class="module-twist">▶</span><span class="module-ic">📦</span>
@@ -191,7 +191,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Research synthesis assignment</span><span class="topic-check">✓</span></div>
             </div>
           </div>
-
+ 
           <div class="module">
             <div class="module-hd" onclick="togM(this)">
               <span class="module-twist">▶</span><span class="module-ic">📦</span>
@@ -205,7 +205,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="topic link"><span class="topic-ic">📝</span><span class="topic-name">Prototype critique</span><span class="topic-check">✓</span></div>
             </div>
           </div>
-
+ 
           <div class="module open">
             <div class="module-hd" onclick="togM(this)">
               <span class="module-twist">▶</span><span class="module-ic">🎯</span>
@@ -218,16 +218,16 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="topic cur"><span class="topic-ic">📄</span><span class="topic-name">Design Thinking Project — course final project</span><span class="topic-date due">Due Jun 25</span></div>
             </div>
           </div>
-
+ 
           <div class="scroll-note-c">
             Sidebar, top bar, breadcrumb, and dark/light toggle are consistent across home, course list, and this course page. Right-column panels are independently collapsible — click a header to expand or collapse.
           </div>
-
+ 
         </div>
-
+ 
         <!-- RIGHT: rail -->
         <div class="col-right">
-
+ 
           <!-- grade summary panel (open) -->
           <div class="panel open" id="r-grade">
             <div class="panel-hd" onclick="tog('r-grade')">
@@ -243,7 +243,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="prog-lbl"><span>Course progress</span><span style="color:var(--green)">64%</span></div>
             </div></div>
           </div>
-
+ 
           <!-- announcements (open) -->
           <div class="panel open" id="r-ann">
             <div class="panel-hd" onclick="tog('r-ann')">
@@ -254,7 +254,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="list-item"><div class="dot" style="background:var(--text3)"></div><div class="list-text">No announcements to display.</div></div>
             </div></div>
           </div>
-
+ 
           <!-- updates (open) -->
           <div class="panel open" id="r-upd">
             <div class="panel-hd" onclick="tog('r-upd')">
@@ -266,7 +266,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="cal-event"><span style="font-size:14px;font-weight:700;color:var(--blue);min-width:30px">407</span><span class="cal-text">New emails</span></div>
             </div></div>
           </div>
-
+ 
           <!-- calendar (open) -->
           <div class="panel open" id="r-cal">
             <div class="panel-hd" onclick="tog('r-cal')">
@@ -280,7 +280,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
               <div class="cal-event"><span class="cal-dot" style="background:var(--red)"></span><span class="cal-text">Course Wrap-Up closes</span><span class="cal-due" style="color:var(--red)">Jul 4</span></div>
             </div></div>
           </div>
-
+ 
           <!-- content browser (closed) -->
           <div class="panel" id="r-cb">
             <div class="panel-hd" onclick="tog('r-cb')">
@@ -289,7 +289,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
             </div>
             <div class="panel-body"><div class="panel-inner"><a class="lnk">All course content →</a></div></div>
           </div>
-
+ 
           <!-- need help (closed) -->
           <div class="panel" id="r-help">
             <div class="panel-hd" onclick="tog('r-help')">
@@ -298,7 +298,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
             </div>
             <div class="panel-body"><div class="panel-inner"><a class="lnk">D2L Contact Form</a></div></div>
           </div>
-
+ 
           <!-- library (closed) -->
           <div class="panel" id="r-lib">
             <div class="panel-hd" onclick="tog('r-lib')">
@@ -307,13 +307,13 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
             </div>
             <div class="panel-body"><div class="panel-inner"><a class="lnk">MSU Libraries →</a></div></div>
           </div>
-
+ 
         </div>
       </div>
     </div>
   </div>
 </div>
-
+ 
 <!-- THEME TOGGLE -->
 <div class="theme-toggle">
   <span class="toggle-label" id="mode-lbl">Dark</span>
@@ -321,7 +321,7 @@ body.light .stat-card { background: rgba(255,255,255,0.55); }
     <div class="toggle-thumb" id="thumb">🌙</div>
   </div>
 </div>
-
+ 
 <script>
 function tog(id) {
   document.getElementById(id).classList.toggle('open');
